@@ -1,7 +1,5 @@
 import os
-import tqdm
 import openai
-from langchain import OpenAI
 from dotenv import load_dotenv
 from utils.embedding_handlers import get_embedding_clusters
 from utils.summarization_handlers import get_chunks_summaries, get_final_summary

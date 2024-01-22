@@ -1,9 +1,5 @@
-import os
-import tqdm
 import openai
 import streamlit as st
-from langchain import OpenAI
-from tempfile import NamedTemporaryFile
 from utils.embedding_handlers import get_embedding_clusters
 from utils.summarization_handlers import get_chunks_summaries, get_final_summary
 from utils.text_handlers import load_document, text_splitter, normalize_text, export_as_md
