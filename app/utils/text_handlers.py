@@ -29,5 +29,9 @@ def normalize_text(text):
 
 
 def export_as_md(text, vault_path, out_file_name):
-    with open(fr'{vault_path}\{out_file_name}.md', 'w') as file:
-        file.write(text)
+    if vault_path:
+        with open(fr'{vault_path}\{out_file_name}.md', 'w') as file:
+            file.write(text)
+    else:
+        with open(fr'{out_file_name}.md', 'w') as file:
+            file.write(text)

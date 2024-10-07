@@ -24,6 +24,7 @@ def get_chunks_summaries(selected_indices, docs):
 
     summary_list = []
     progress_bar = tqdm(total=len(selected_docs), dynamic_ncols=True, desc="Processing chunks")
+    start_time = time.time()
     for i, doc in enumerate(selected_docs):
         chunk_summary = map_chain.run([doc])
         summary_list.append(chunk_summary)
@@ -40,7 +41,7 @@ def get_chunks_summaries(selected_indices, docs):
 
 
 def get_final_summary(summaries):
-    chat_llm2 = ChatOpenAI(temperature=0, max_tokens=3000, model='gpt-3.5-turbo-16k', request_timeout=120)
+    chat_llm2 = ChatOpenAI(temperature=0, max_tokens=3000, model='gpt-4o-mini', request_timeout=120)
 
     # combine_prompt = """
     # You will be given a series of summaries from an essay. The summaries will be enclosed in triple backticks (```)
@@ -57,13 +58,12 @@ def get_final_summary(summaries):
     combine_prompt = """
         You will be given a series of summaries from an essay. The summaries will be enclosed in triple backticks (```)
         Your task is to write a new essay using the given summaries, including the topics discussed and the events that happened.
-        The reader should be able to understand the overall context of the essay and its topics and events.
-        The new essay should be at least 350 words, formatted correctly, and with paragraph titles.
-
-        make sure to add some tags at the bottom of the essay.
+        The reader must be able to understand the overall context of the essay, its topics and events.
+        The new essay should be at least 350 words, formatted correctly and with paragraph titles.
 
         ```{text}```
         VERBOSE SUMMARY:
+        
         """
 
     combine_prompt_template = PromptTemplate(template=combine_prompt, input_variables=["text"])
